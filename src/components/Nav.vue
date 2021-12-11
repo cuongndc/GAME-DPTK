@@ -28,10 +28,10 @@
 <template>
   <div class="bg-gray-800 text-gray-100 flex justify-between md:hidden">
     <!-- logo -->
-    <a href="#" class="block p-4 text-white font-bold" v-if="user">Đạo hữu: {{ user.displayName }}</a>
-    <a v-else>
+    <span href="#" class="block p-4 text-white font-bold" v-if="user">Đạo hữu: {{ user.displayName }}</span>
+    <span v-else>
 
-    </a>
+    </span>
     <!-- mobile menu button -->
     <button style="padding: 10px" @click="showMenu = !showMenu" class="mobile-menu-button pt-0.5 pb-0.5 focus:outline-none focus:bg-gray-700">
       🔛 TU TIÊN
@@ -41,7 +41,7 @@
     <!-- mobile menu bar -->
 
     <!-- sidebar -->
-    <div v-bind:class="{'-translate-x-full': showMenu }" class="sidebar text-blue-100 w-64 space-y-6 py-7 absolute inset-y-0 left-0 transform  md:relative md:translate-x-0 transition duration-200 ease-in-out" style="background-color: #111827;">
+    <div v-bind:class="{'-translate-x-full': !showMenu }" class="sidebar text-blue-100 w-64 space-y-6 py-7 absolute inset-y-0 left-0 transform  md:relative md:translate-x-0 transition duration-200 ease-in-out" style="background-color: #111827;">
       <!-- logo -->
       <a href="#" class="text-white flex items-center space-x-2 px-4">
         <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

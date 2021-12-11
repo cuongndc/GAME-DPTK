@@ -3,9 +3,17 @@
     Bản đồ hiện tại:Thôn quảng trường[Vùng an toàn]<a href="?cmd=Yc2x1pkhPpW15dGFzayZzaWQ9ZjAzOWU1NTU2MmE3NzI5NjE4OGYyOTYzY2E5N2ZhZTEO0O0O">Nhiệm vụ(2)</a><a href="?cmd=Yc2x1pkhPpWdvbWlkJm5ld21pZD0yMjUmc2lkPWYwMzllNTU1NjJhNzcyOTYxODhmMjk2M2NhOTdmYWUx">Làm mới</a> <br>
     <a href="?cmd=Yc2x1pkhPpW5wYyZuaWQ9MTEmc2lkPWYwMzllNTU1NjJhNzcyOTYxODhmMjk2M2NhOTdmYWUx">Thôn trường</a><br>        <a href="?cmd=Yc2x1pkhPpW5wYyZuaWQ9MTcmc2lkPWYwMzllNTU1NjJhNzcyOTYxODhmMjk2M2NhOTdmYWUx">Vân du tiên y [ trì liệu ]</a><br>
     Ngươi thấy:<br>
-    Mời chọn giao lộ:<br>
-    Hướng Đông:<a href="?cmd=Yc2x1pkhPpWdvbWlkJm5ld21pZD0yMjYmc2lkPWYwMzllNTU1NjJhNzcyOTYxODhmMjk2M2NhOTdmYWUx">Thôn đông →</a><br>
-    Thôn quảng trường Người chơi: <a href="?cmd=Yc2x1pkhPpWdldHBsYXllcmluZm8mdWlkPTUwMiZzaWQ9ZjAzOWU1NTU2MmE3NzI5NjE4OGYyOTYzY2E5N2ZhZTEO0O0O">Sagabus</a><br>
+    <p>
+      Mời chọn giao lộ:
+    </p>
+    <p>
+      <router-link :to="`/map/${firstMap.id}`">
+        Hướng Đông: 🔜 {{ firstMap.name }}
+      </router-link>
+    </p>
+    <p>
+      Thôn quảng trường Người chơi: <a href="?cmd=Yc2x1pkhPpWdldHBsYXllcmluZm8mdWlkPTUwMiZzaWQ9ZjAzOWU1NTU2MmE3NzI5NjE4OGYyOTYzY2E5N2ZhZTEO0O0O">Sagabus</a><br>
+    </p>
     【<a href="?cmd=Yc2x1pkhPpWFsbG1hcCZzaWQ9ZjAzOWU1NTU2MmE3NzI5NjE4OGYyOTYzY2E5N2ZhZTEO0O0O">K.tra bản đồ</a>】<br>
     <hr style="height:1px;border:none;border-top:1px dashed #e3e3e3;">
     <font style="font-size:12px;color:#666;">Nếu có bất kỳ lỗi nào trong game, vui lòng gửi lỗi, tôi sẽ lập biên bản thống kê và sửa theo khả năng của mình, mong các bạn bỏ qua những chỗ không sửa được.!<br></font>
@@ -27,8 +35,16 @@
 </template>
 
 <script setup>
-  import { useStore } from 'vuex'
-  const store = useStore()
+import { maps } from '../types/maps'
+import { useStore } from 'vuex'
+import { computed } from "vue";
 
+const store = useStore()
 
+console.log("maps", maps)
+const firstMap = computed(() => {
+  return maps[0]
+})
+
+console.log("firstMap", firstMap.value)
 </script>

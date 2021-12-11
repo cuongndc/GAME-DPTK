@@ -133,3 +133,47 @@ nav button {
 ::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-200;
 }
+
+
+#ltmsg2{
+    float: left;
+    resize: none;
+}
+
+#btn{
+    display:inline-block;
+    background: #fff;
+    color:#ff7a01;
+    border:1px solid #ff7a01;
+    text-align: center;
+    width: 57px;
+    font-size: 0.8em;
+    line-height: 26px;
+    height:26px;border-radius: 5px;
+    max-width: 98%;
+}
+
+a:link {
+    color: #0093E8;
+    display: inline-block;
+    margin: 4px 3px 2px 4px;
+}
+
+a{
+
+    color: #0093E8;
+    padding: 1px 10px;
+    border: 1px solid #e3e3e3;
+    border-radius: 3px;
+    text-decoration: none;
+    margin-right: 3px;
+}
+
+a:visited {
+    color: #0093E8;
+}
+
+a:hover,a:active,a:focus {
+    color: #FFFFFF;
+    background: #0093e8;
+}
