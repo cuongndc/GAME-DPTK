@@ -29,8 +29,11 @@
   <div class="bg-gray-800 text-gray-100 flex justify-between md:hidden">
     <!-- logo -->
     <a href="#" class="block p-4 text-white font-bold" v-if="user">Đạo hữu: {{ user.displayName }}</a>
+    <a v-else>
+
+    </a>
     <!-- mobile menu button -->
-    <button @click="showMenu = !showMenu" class="mobile-menu-button pt-0.5 pb-0.5 focus:outline-none focus:bg-gray-700 -translate-x-full">
+    <button style="padding: 10px" @click="showMenu = !showMenu" class="mobile-menu-button pt-0.5 pb-0.5 focus:outline-none focus:bg-gray-700">
       🔛 TU TIÊN
     </button>
   </div>
