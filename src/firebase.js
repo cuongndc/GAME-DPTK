@@ -1,7 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, getDocs, query, where } from "firebase/firestore";
-import {COLLECTIONS} from "./constants/collections";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { COLLECTIONS } from "./constants/collections";
+import 'firebase/auth'
+
+import { ref, onUnmounted, computed } from 'vue';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -17,8 +21,42 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+const firebase = initializeApp(firebaseConfig);
+const provider = new GoogleAuthProvider();
+provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 const db = getFirestore();
+
+
+const auth = getAuth();
+
+export function useAuth() {
+    const user = ref(null)
+    const unsubscribe = auth.onAuthStateChanged(_user => (user.value = _user))
+    onUnmounted(unsubscribe)
+    const isLogin = computed(() => user.value !== null)
+
+    const signIn = async () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                user.value = result.user;
+                // ...
+            }).catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // ...
+        });
+    }
+
+    const signOut = () => auth.signOut()
+    return { user, isLogin, signIn, signOut }
+}
 
 export function usePlayerFirebase() {
     const getPlayerByID = async (ID) => {

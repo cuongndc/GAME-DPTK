@@ -1,16 +1,42 @@
+<!--<template>-->
+<!--  <nav>-->
+<!--    <div style="color: #fff">-->
+<!--        <span v-if="user">Đạo hữu: {{ user.displayName }}</span>-->
+<!--      <div class="login" v-if="isLogin">-->
+<!--        <Avatar :src="user.photoURL" />-->
+<!--        <button class="text-gray-400 hover:text-white" @click="signOut">-->
+<!--          Đăng xuất-->
+<!--        </button>-->
+<!--      </div>-->
+
+<!--      <div v-if="!isLogin">-->
+<!--        <button class="bg-green-500 hover:bg-green-600" @click="signIn">-->
+<!--          Đăng nhập-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </nav>-->
+<!--</template>-->
+
+<!--<script setup>-->
+<!--import Avatar from './Avatar.vue'-->
+<!--import { useAuth } from '@/firebase'-->
+<!--const { user, isLogin, signOut, signIn } = useAuth()-->
+<!--</script>-->
+
+
 <template>
-  <div class="relative min-h-screen md:flex">
+  <div class="bg-gray-800 text-gray-100 flex justify-between md:hidden">
+    <!-- logo -->
+    <a href="#" class="block p-4 text-white font-bold" v-if="user">Đạo hữu: {{ user.displayName }}</a>
+    <!-- mobile menu button -->
+    <button @click="showMenu = !showMenu" class="mobile-menu-button pt-0.5 pb-0.5 focus:outline-none focus:bg-gray-700 -translate-x-full">
+      🔛 TU TIÊN
+    </button>
+  </div>
+  <div class="fixed min-h-screen md:flex">
     <!-- mobile menu bar -->
-    <div class="bg-gray-800 text-gray-100 flex justify-between md:hidden">
-      <!-- logo -->
-      <a href="#" class="block p-4 text-white font-bold">Better Dev</a>
-      <!-- mobile menu button -->
-      <button @click="showMenu = !showMenu" class="mobile-menu-button pt-0.5 pb-0.5 focus:outline-none focus:bg-gray-700 -translate-x-full">
-        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
+
     <!-- sidebar -->
     <div v-bind:class="{'-translate-x-full': showMenu }" class="sidebar text-blue-100 w-64 space-y-6 py-7 absolute inset-y-0 left-0 transform  md:relative md:translate-x-0 transition duration-200 ease-in-out" style="background-color: #111827;">
       <!-- logo -->
@@ -41,21 +67,28 @@
           MÔN PHÁI
         </a>
         <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">
-         ĐAN CÁC
+          ĐAN CÁC
         </a>
         <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">
           THỢ RÈN
         </a>
+        <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">
+          BẢN ĐỒ
+        </a>
       </nav>
     </div>
-    <!-- content -->
-    <div class="flex-1 p-10 text-2xl font-bold">
-      content goes here
-    </div>
+<!--    &lt;!&ndash; content &ndash;&gt;-->
+<!--    <div class="flex-1 p-10 text-2xl font-bold">-->
+<!--      <Home />-->
+<!--    </div>-->
   </div>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import Avatar from './Avatar.vue'
+import { ref } from 'vue'
+import { useAuth } from '@/firebase'
+const { user, isLogin, signOut, signIn } = useAuth()
 const showMenu = ref(false)
+
 </script>

@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <button class="btn btn-blue" type="button" @click="generateAccount">
-      Generate account
-    </button>
-  </div>
+  <Nav />
+<!--  <Sidebar />-->
     <div class="row">
         <div class="main">
           <router-view />
@@ -14,6 +11,7 @@
 <script setup>
 import { useFirebase, usePlayerFirebase } from "./firebase"
 import { COLLECTIONS } from "./constants/collections";
+import Nav from '@/components/nav.vue';
 import { PLAYER } from './types/player'
 import {onMounted} from "vue";
 import { useStore} from "vuex";
