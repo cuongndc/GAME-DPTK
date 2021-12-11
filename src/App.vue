@@ -10,7 +10,7 @@
 <script setup>
 import { useFirebase, usePlayerFirebase } from "./firebase"
 import { COLLECTIONS } from "./constants/collections";
-import Nav from '@/components/nav.vue';
+import Nav from '@/components/Nav.vue';
 import { PLAYER } from './types/player'
 import {onMounted} from "vue";
 import { useStore} from "vuex";
