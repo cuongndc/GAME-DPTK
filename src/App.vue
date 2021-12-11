@@ -1,6 +1,5 @@
 <template>
   <Nav />
-<!--  <Sidebar />-->
     <div class="row">
         <div class="main">
           <router-view />
