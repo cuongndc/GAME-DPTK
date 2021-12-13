@@ -177,3 +177,24 @@ a:hover,a:active,a:focus {
     color: #FFFFFF;
     background: #0093e8;
 }
+
+.modal {
+    width: 90%;
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.3s transform;
+    background-color: #fff;
+    height: 300px;
+    position: relative;
+}
+
+/* Slide up transition when open modal */
+
+.vue-universal-modal-enter-to .modal,
+.vue-universal-modal-leave-from .modal {
+    transform: translate3d(0, 0, 0);
+}
+.vue-universal-modal-enter-from .modal,
+.vue-universal-modal-leave-to .modal {
+    transform: translate3d(0, 50px, 0);
+}

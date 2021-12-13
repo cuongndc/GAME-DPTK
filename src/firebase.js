@@ -6,6 +6,7 @@ import { COLLECTIONS } from "./constants/collections";
 import 'firebase/auth'
 
 import { ref, onUnmounted, computed } from 'vue';
+import { useStore } from "vuex";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -30,10 +31,12 @@ const db = getFirestore();
 const auth = getAuth();
 
 export function useAuth() {
+    const store = useStore()
     const user = ref(null)
     const unsubscribe = auth.onAuthStateChanged(_user => (user.value = _user))
     onUnmounted(unsubscribe)
     const isLogin = computed(() => user.value !== null)
+
 
     const signIn = async () => {
         signInWithPopup(auth, provider)
@@ -41,7 +44,11 @@ export function useAuth() {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
                 user.value = result.user;
-                // ...
+                store.commit("SET_USER", result.user)
+                usePlayerFirebase().getPlayerByEmail(result.user.email).then(res => {
+                    store.commit("SET_PLAYER", res)
+                })
+                return user.value
             }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;
@@ -53,20 +60,26 @@ export function useAuth() {
             // ...
         });
     }
-
+    const getUserInfo = async () => {
+        return await user.value
+    }
     const signOut = () => auth.signOut()
     return { user, isLogin, signIn, signOut }
 }
 
 export function usePlayerFirebase() {
-    const getPlayerByID = async (ID) => {
+    const getPlayerByEmail = async (email) => {
         const citiesRef = collection(db, COLLECTIONS.PLAYERS);
-        const q = query(citiesRef, where("id", "==", ID));
+        const q = query(citiesRef, where("email", "==", email));
         const querySnapshot = await getDocs(q);
-        return querySnapshot.docs[0].data()
+        if (querySnapshot.docs.length > 0) {
+            return querySnapshot.docs[0].data()
+        }
+
+        return []
     }
 
-    return { getPlayerByID }
+    return { getPlayerByEmail }
 }
 
 export function useFirebase() {

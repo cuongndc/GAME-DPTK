@@ -12,30 +12,42 @@ import { useFirebase, usePlayerFirebase } from "./firebase"
 import { COLLECTIONS } from "./constants/collections";
 import Nav from '@/components/Nav.vue';
 import { PLAYER } from './types/player'
-import {onMounted} from "vue";
+import { onBeforeMount } from "vue";
 import { useStore} from "vuex";
+import { getAuth } from "firebase/auth";
+import { useRoute, useRouter } from 'vue-router'
 
 const firebase = useFirebase()
 const usePlayer = usePlayerFirebase()
 const store = useStore()
+const auth = getAuth()
 
-onMounted(async () => {
-  const player = await getPlayerByID()
-  store.commit("SET_PLAYER", player);
+const route = useRoute()
+const router = useRouter()
+
+onBeforeMount( () => {
+  auth.onAuthStateChanged((user) => {
+    store.commit("SET_USER", user)
+    if (!user) {
+      router.replace('/index')
+    } else if (route.path == '/login' || route.path == '/register') {
+      router.replace('/')
+    }
+  })
 })
-
-const getPlayerByID = async () => {
-  return await usePlayer.getPlayerByID("0e8ca58a-ff4d-4d82-ae98-e82730f081f7");
-}
-
-const newPlayer = async () => {
-  PLAYER.name = 'Cuong Nguyen'
-  return await firebase.addDocF(COLLECTIONS.PLAYERS, PLAYER);
-}
-
-const generateAccount = async () => {
-  const player = await newPlayer();
-}
+//
+// const getPlayerByEmail = async (email) => {
+//   return await usePlayer.getPlayerByEmail(email);
+// }
+//
+// const newPlayer = async () => {
+//   PLAYER.name = 'Cuong Nguyen'
+//   return await firebase.addDocF(COLLECTIONS.PLAYERS, PLAYER);
+// }
+//
+// const generateAccount = async () => {
+//   const player = await newPlayer();
+// }
 
 </script>
 <style>

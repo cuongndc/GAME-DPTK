@@ -7,15 +7,13 @@ export default {
     },
 
     mutations: {
-        SET_PLAYER(state, payload) {
+        SET_USER(state, payload) {
             console.log("payload", payload)
             state.info = payload
         }
     },
 
     actions: {
-        SET_PLAYER({ commit }, payload ) {
-            commit('SET_PLAYER', payload)
-        }
+
     },
 }

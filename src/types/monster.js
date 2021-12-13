@@ -3,6 +3,8 @@ export const monster = [{
     map_id: 1,
     name: 'Sà tinh',
     level: 1,
+    level_id: 1,
+    gender: 'Nữ',
     bonuses: {
         exp: 10,
         coin: 10,

@@ -16,6 +16,7 @@ export const PLAYER = {
     id: create_UUID(),
     user_id: 1,
     server_id: 1,
+    email: '',
     name: '',
     level: 1,
     cultivation: 0,

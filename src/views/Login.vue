@@ -1,42 +1,57 @@
-<div class="main">
-<img src="images/11.jpg" width="300" height="200"><br>
-<div id="mainfont">
-  Nguyệt lãnh thiên sơn giang tự bích, băng nhai vạn trượng vô lưu ý.<br>
-  Tầm đạo chích ảnh liên hoa lạc, trúc âm liêu lạc thính tân khúc.<br>
-  Tiên nhân thính thùy túy minh nguyệt, đạp lãng đạp phong tùy yến khứ.<br>
-  Kỷ cương nhân luân tâm như tang, nhất túy hồng trần tiêu bách tự.<br>
-  Ma tiền khấu thủ tam thiên niên, hồi thủ hồng trần bất tố tiên.<br>
-</div>
-<div class="login">
-  <form action="/index.php" method="post">
+<template>
+  <div class="w-full max-w-xs">
+    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Email
+        </label>
+        <input v-bind:class="{'border-red-500': errCode == 'auth/invalid-email'}" v-model="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="Email" type="text" placeholder="Username">
+        <p v-if="errCode == 'auth/invalid-email'" class="text-red-500 text-xs italic">{{ err }}</p>
+      </div>
+      <div class="mb-6">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+          Mật khẩu
+        </label>
+        <input v-bind:class="{'border-red-500': errCode == 'auth/weak-password'}" v-model="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************">
+        <p v-if="errCode == 'auth/weak-password'" class="text-red-500 text-xs italic">{{ err }}</p>
+      </div>
+      <div class="flex items-center justify-between">
+        <button @click.prevent="onLogin" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+          Đăng nhập
+        </button>
+        <router-link to="/register" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+          Đăng ký?
+        </router-link>
+      </div>
+      <p v-if="errCode == 'auth/internal-error' || errCode == 'auth/missing-email' || errCode == 'auth/email-already-in-use' " class="text-red-500 text-xs italic">{{ err }}</p>
 
-    <input type="text" name="username" placeholder="Tài khoản" class="input" value="Cuongnd"><br>
+    </form>
+    <p class="text-center text-gray-500 text-xs">
+      &copy;2022 Saga. All rights reserved.
+    </p>
+  </div>
+</template>
 
-    <input type="password" name="userpass" placeholder="Mật khẩu" class="input" value="adadad"><br>
-    <p><input type="submit" name="submit" class="btn-login" value="Đăng nhập"> <a href="reguser.php" id="btn">Đăng ký</a></p>
-  </form>
-</div>
-<div class="fix">
-  <h2>2020/1/2 sửa nội dung:</h2>
-  <p>1. Sửa lỗi người chơi khác nhau tạo võ công</p>
-  <p>2. Chức năng NPC khôi phục bình thường, có thể trị liệu, mua thuốc, trao đổi kỹ năng</p>
-  <p>3. Thời gian ngoại tuyến đã được điều chỉnh từ 10 phút ban đầu thành 15 phút</p>
-  <p>4. Đã thêm chức năng gửi và xem lỗi</p>
-  <p>5. Tối ưu hóa hiển thị song song của việc quay lại trang trước và quay lại trang chủ</p>
-  <p>6. Sửa lỗi chức năng võ công không có thời gian góc</p>
-  <p>7. Tối ưu hóa kích thước phông chữ của màn hình trò chuyện</p>
-  <p>8. Giao diện đăng nhập thêm nút để xem thêm nhật ký</p>
-  <p>9. Khắc phục sự cố bảng trắng thuốc hiển thị trên quái vật</p>
-  <p>10. Điều chỉnh kinh nghiệm tiêu diệt quái vật, có 5 điểm thưởng khi nhảy cóc</p>
-  <p>11. Cuộc trò chuyện bị hủy và được làm mới, và các khoảng trống không được phép gửi</p>
-  <p>12. Sửa lỗi biệt hiệu có thể bị lặp lại</p>
-  <h2>Nội dung cần sửa chữa:</h2>
-  <p>1. Điều chỉnh trang nhiệm vụ (lập kế hoạch)</p>
-  <p>2. Vấn đề thú cưng không phát huy tác dụng trong trận chiến</p>
-  <p>3. Các vấn đề chưa biết còn lại</p>
-  <p>4. Có kế hoạch điều chỉnh gói thiết bị (tùy theo tình hình quy hoạch và khả năng kỹ thuật có thể không bổ sung được, đừng quá hi vọng)</p>
-  <p>5. Tấn công tự động đơn quái (tùy kỹ năng có thể không cộng được, đừng ôm hy vọng quá nhiều)</p>
-  <br>
-  <button type="button" onclick="window.location.href='log.php'">Xem thêm nhật ký</button>
-</div>
-</div>
+<script setup>
+import { ref } from "vue"
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+const err = ref("")
+const errCode = ref("")
+const email = ref("")
+const password = ref("")
+const onLogin = () => {
+  const auth = getAuth();
+  signInWithEmailAndPassword(auth, email.value, password.value)
+      .then((userCredential) => {
+        console.log("userCredential",userCredential)
+        // Signed in
+      })
+      .catch((error) => {
+        errCode.value = error.code;
+        console.log("errorCode", error.code)
+        err.value = error.message;
+        console.log("error", error)
+        // ..
+      });
+}
+</script>
