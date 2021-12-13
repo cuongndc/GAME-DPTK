@@ -46,29 +46,28 @@
 <script setup>
 import { maps } from '../types/maps'
 import { monster } from "../types/monster"
-import router from "../router"
 import MonsterInfo from './monster/MonsterInfo.vue'
 import { getLevelByID } from '@/types/levels'
-import {computed, ref} from 'vue'
+import { computed, ref } from 'vue'
+import { useRoute, useRouter } from "vue-router";
 
 const isShow = ref(false)
 const selectMonster = ref({})
+const route = useRoute()
+const router = useRouter()
 
 const handleMonster = (monster) => {
   selectMonster.value = monster
   isShow.value = true
-  console.log("selectMonster", selectMonster.value)
 }
-const mapID = router.currentRoute.value.params.id
+
+const mapID = route.params.id
 const mapCurrent = maps.find(map => {
   return map.id == mapID
 });
 const listMonstersInMap = monster.filter(mon => {
   return mon.map_id == mapID
 })
-// const onClose = (callBack) => {
-//   isShow.value = callBack
-// }
 
 const h3 = 'mt-6 mb-2 text-xl font-bold'
 const button = 'mt-2 rounded-full py-1 px-4 bg-white transition border-blue-500 border-2 text-blue-500 text-sm hover:border-blue-700 hover:text-blue-700 focus:bg-blue-700 focus:text-white focus:outline-none'
@@ -79,7 +78,10 @@ const onClose = () => {
   isShow.value = false
 }
 const onAttack = () => {
-  console.log("attack")
+  console.log("selectMonster", selectMonster.value.id)
+  router.push({
+    path: `/attack_monitor/${selectMonster.value.id}`,
+  })
 }
 
 </script>

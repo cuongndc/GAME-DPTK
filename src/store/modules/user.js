@@ -1,6 +1,6 @@
 export default {
     state: {
-        info: {}
+        info: {},
     },
     getters: {
         //
@@ -8,7 +8,6 @@ export default {
 
     mutations: {
         SET_USER(state, payload) {
-            console.log("payload", payload)
             state.info = payload
         }
     },

@@ -9,9 +9,7 @@
 
 <script setup>
 import { useFirebase, usePlayerFirebase } from "./firebase"
-import { COLLECTIONS } from "./constants/collections";
 import Nav from '@/components/Nav.vue';
-import { PLAYER } from './types/player'
 import { onBeforeMount } from "vue";
 import { useStore} from "vuex";
 import { getAuth } from "firebase/auth";
@@ -26,19 +24,21 @@ const route = useRoute()
 const router = useRouter()
 
 onBeforeMount( () => {
-  auth.onAuthStateChanged((user) => {
+  auth.onAuthStateChanged(async (user) => {
     store.commit("SET_USER", user)
+    const player = await getPlayerByEmail(user.email)
+    store.commit("SET_PLAYER", player)
     if (!user) {
-      router.replace('/index')
+      await router.replace('/index')
     } else if (route.path == '/login' || route.path == '/register') {
-      router.replace('/')
+      await router.replace('/')
     }
   })
 })
 //
-// const getPlayerByEmail = async (email) => {
-//   return await usePlayer.getPlayerByEmail(email);
-// }
+const getPlayerByEmail = async (email) => {
+  return await usePlayer.getPlayerByEmail(email);
+}
 //
 // const newPlayer = async () => {
 //   PLAYER.name = 'Cuong Nguyen'

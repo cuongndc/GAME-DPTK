@@ -1,6 +1,10 @@
 export default {
     state: {
-        info: {}
+        info: {},
+        proper: {},
+        items: [],
+        skill: [],
+        map: {}
     },
     getters: {
         //
@@ -8,8 +12,9 @@ export default {
 
     mutations: {
         SET_PLAYER(state, payload) {
-            console.log("payload", payload)
             state.info = payload
+            state.proper = payload.proper
+            state.items = payload.items
         }
     },
 

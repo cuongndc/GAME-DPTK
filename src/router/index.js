@@ -3,9 +3,9 @@ import Home from '@/components/Home.vue'
 import PlayerInfo from '@/views/PlayerInfo.vue'
 import Map from '@/views/Map.vue'
 import AttackMonitor from '@/views/monster/AttackMonitor.vue'
-import Register from '@/views/register.vue'
-import Login from '@/views/login.vue'
-import Index from '@/views/index.vue'
+import Register from '@/views/Register.vue'
+import Login from '@/views/Login.vue'
+import Index from '@/views/Index.vue'
 
 const routes = [
     {
