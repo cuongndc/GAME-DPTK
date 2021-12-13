@@ -3,5 +3,6 @@ export const COLLECTIONS = {
     MAPS: 'maps',
     PET: 'pet',
     SKILL: 'skill',
-    ITEMS: 'items'
+    ITEMS: 'items',
+    ACTIVITY: 'activity'
 }
